@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,7 +33,9 @@ public class SawmillControllerTest {
     @InjectMocks
     private  SawmillController sawmillController;
 
-    private Sawmill sawmill,sawmill2;
+    private Sawmill sawmill,sawmill2,sawmill3;
+
+    private Map<String,Object> changes;
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,6 +43,8 @@ public class SawmillControllerTest {
     @BeforeEach
     public void setUp(){
         sawmill = Sawmill.builder().id(1L).name("test").city("pune").country("India").build();
+        sawmill3 = Sawmill.builder().id(1L).name("test2").city("pune").country("India").build();
+        changes = Map.of("name","test2");
         sawmill2 = Sawmill.builder().build();
         mockMvc = MockMvcBuilders.standaloneSetup(sawmillController).build();
     }
@@ -64,11 +70,21 @@ public class SawmillControllerTest {
     }
 
     @Test
-    public void GetMappingOfProductShouldReturnRespectiveProducct() throws Exception {
+    public void GetMappingOfSawmillShouldReturnRespectiveSawmill() throws Exception {
         when(sawmillService.getSawmillByName(sawmill.getName())).thenReturn(sawmill);
         mockMvc.perform(get("/api/v1/sawmill?name=test")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(sawmill)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void PatchMappingForSawmill() throws Exception {
+        when(sawmillService.updateSawmill(sawmill.getId(),changes)).thenReturn(sawmill3);
+        mockMvc.perform(patch("/api/v1/sawmill/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(changes)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
