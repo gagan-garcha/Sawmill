@@ -75,12 +75,8 @@ test {
     }
 }
 
-bootJar {
-    enabled = true
-    exclude "integration-test/**"
-    exclude "integration-test/**/**"
-    exclude "test/**"
-    exclude "test/**/**"
+springBoot {
+    mainClass = "com.app.sawmills.SawmillsApplication"
 }
 
 check {
