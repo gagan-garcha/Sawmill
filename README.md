@@ -1,7 +1,7 @@
 # Welcome to Sawmill Manager
 
 Sawmill Manager has different API's that is used to manage the sawmills.
-
+The code is built using SOLID design principles.
 The application uses H2 in memory database to persist the data. Once the application is restarted the data will be lost.
 
 ## Requirements

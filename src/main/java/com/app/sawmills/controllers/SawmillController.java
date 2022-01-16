@@ -21,12 +21,20 @@ public class SawmillController {
         this.sawmillService = sawmillService;
     }
 
+    /**
+     * A POST request to save a sawmill
+     * @return sawmill object
+     */
     @PostMapping
     public ResponseEntity<Sawmill> saveSawmill(@Valid @NotNull @RequestBody Sawmill request) {
         Sawmill sawmill = sawmillService.insert(request);
         return new ResponseEntity<>(sawmill,  HttpStatus.CREATED);
     }
 
+    /**
+     * PATCH request to update the sawmill
+     * @return Updated sawmill
+     */
     @PatchMapping("/{sawmillId}")
     public ResponseEntity<?> updateSawmill(@PathVariable long sawmillId,@RequestBody Map<String,Object> changes){
         Sawmill sawmill = sawmillService.updateSawmill(sawmillId,changes);
@@ -36,12 +44,21 @@ public class SawmillController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Get request to find the sawmill by name
+     * @return A sawmill object with matching name
+     */
     @GetMapping("/{name}")
     public ResponseEntity<Sawmill> getSawmill(@Valid @NotNull @PathVariable String name) {
         Sawmill sawmill = sawmillService.getSawmillByName(name);
         return new ResponseEntity<>(sawmill,  HttpStatus.OK);
     }
 
+    /**
+     * Get request that filters the sawmill by given query if the query is not present
+     * then it gives all sawmills
+     * @return List of sawmill
+     */
     @GetMapping
     public ResponseEntity<List<Sawmill>> getAllSawmill(@RequestParam(required = false) String name) {
         List<Sawmill> sawmills = sawmillService.getSawmills(name);
