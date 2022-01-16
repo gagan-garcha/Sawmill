@@ -20,6 +20,22 @@ Compiles the project, runs the test and then creates an executable JAR file
 $ ./gradlew build
 ```
 
+### Run the tests
+
+There are two types of tests, the unit tests and the integration tests. These can be executed as follows.
+
+- Run unit tests only
+
+  ```console
+  $ ./gradlew test
+  ```
+
+- Run integration tests only
+
+  ```console
+  $ ./gradlew integrationTest
+  ```
+
 ### Run the application
 
 Run the application which will be listening on port `8050`.
