@@ -76,7 +76,11 @@ test {
 }
 
 bootJar {
-    mainClass = 'com.app.sawmills.SawmillsApplication'
+    enabled = true
+    exclude "integration-test/**"
+    exclude "integration-test/**/**"
+    exclude "test/**"
+    exclude "test/**/**"
 }
 
 check {
