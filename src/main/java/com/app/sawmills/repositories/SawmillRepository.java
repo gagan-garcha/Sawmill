@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface SawmillRepository extends CrudRepository<Sawmill,Long> {
 
-    Sawmill findByName (String name);
+    Sawmill findByNameIgnoreCase (String name);
 
     List<Sawmill> findByNameContainingIgnoreCase(String query);
 

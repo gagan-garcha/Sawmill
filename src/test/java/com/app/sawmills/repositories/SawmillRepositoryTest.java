@@ -30,7 +30,7 @@ public class SawmillRepositoryTest {
     @Test
     public void saveAndFindByName(){
         sawmill = sawmillRepository.save(sawmill);
-        assertEquals(sawmill,sawmillRepository.findByName(sawmill.getName()));
+        assertEquals(sawmill,sawmillRepository.findByNameIgnoreCase(sawmill.getName()));
     }
 
     @Test

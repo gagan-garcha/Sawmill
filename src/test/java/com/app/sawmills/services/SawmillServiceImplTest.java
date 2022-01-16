@@ -51,8 +51,8 @@ public class SawmillServiceImplTest {
 
     @Test
     void givenSawmillNameShouldReturnSawmill(){
-        when(sawmillRepository.findByName(sawmill1.getName())).thenReturn(sawmill1);
-        when(sawmillRepository.findByName(sawmill2.getName())).thenReturn(sawmill2);
+        when(sawmillRepository.findByNameIgnoreCase(sawmill1.getName())).thenReturn(sawmill1);
+        when(sawmillRepository.findByNameIgnoreCase(sawmill2.getName())).thenReturn(sawmill2);
         assertThat(sawmillService.getSawmillByName(sawmill1.getName())).isEqualTo(sawmill1);
         assertThat(sawmillService.getSawmillByName(sawmill2.getName())).isEqualTo(sawmill2);
     }

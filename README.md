@@ -12,12 +12,24 @@ The project makes use of Gradle and uses
 the [Gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html), which means you don't need Gradle
 installed.
 
+## Useful Gradle commands
+
+The project makes use of Gradle and uses the Gradle wrapper to help you out carrying some common tasks such as building
+the project or running it.
+
 ### Build the project
 
 Compiles the project, runs the test and then creates an executable JAR file
 
 ```console
 $ ./gradlew build
+```
+
+Run the application using Java and the executable JAR file produced by the Gradle `build` task. The application will be
+listening to port `8050`.
+
+```console
+$ java -jar build/libs/sawmills-0.0.1-SNAPSHOT.jar
 ```
 
 ### Run the tests
@@ -49,6 +61,9 @@ $ ./gradlew bootRun
 Below is a list of API endpoints with their respective input and output. Please note that the application needs to be
 running for the following endpoints to work. For more information about how to run the application, please refer
 to [run the application](#run-the-application) section above.
+
+The application is also hosted on Heroku and can be accessed using the URL:
+https://sawmill-management.herokuapp.com/
 
 ### Add Sawmill
 

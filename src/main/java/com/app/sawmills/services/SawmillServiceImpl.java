@@ -26,7 +26,7 @@ public class SawmillServiceImpl implements SawmillService{
 
     @Override
     public Sawmill getSawmillByName(String name) {
-        return   sawmillRepository.findByName(name);
+        return   sawmillRepository.findByNameIgnoreCase(name);
     }
 
     @Override
