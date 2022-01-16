@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +51,7 @@ public class SawmillControllerTest {
     }
 
     @Test
-    public void postMappingForSawmill() throws Exception {
+    public void PostMappingForSawmill() throws Exception {
         when(sawmillService.insert(any())).thenReturn(sawmill);
         mockMvc.perform(post("/api/v1/sawmill").
                         contentType(MediaType.APPLICATION_JSON).
@@ -72,7 +73,7 @@ public class SawmillControllerTest {
     @Test
     public void GetMappingOfSawmillShouldReturnRespectiveSawmill() throws Exception {
         when(sawmillService.getSawmillByName(sawmill.getName())).thenReturn(sawmill);
-        mockMvc.perform(get("/api/v1/sawmill?name=test")
+        mockMvc.perform(get("/api/v1/sawmill/test")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(sawmill)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -83,6 +84,16 @@ public class SawmillControllerTest {
     public void PatchMappingForSawmill() throws Exception {
         when(sawmillService.updateSawmill(sawmill.getId(),changes)).thenReturn(sawmill3);
         mockMvc.perform(patch("/api/v1/sawmill/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(changes)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void GetMappingForSawmillNameFilter() throws Exception {
+        when(sawmillService.getSawmills(any())).thenReturn(List.of(sawmill3));
+        mockMvc.perform(get("/api/v1/sawmill?name=t")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(changes)))
                 .andExpect(MockMvcResultMatchers.status().isOk())

@@ -106,7 +106,7 @@ Example of response
 ### Get Sawmill by Name
 
 ```text
-GET /api/v1/sawmill?name=<nameOfSawmill>
+GET /api/v1/sawmill/<name>
 ```
 
 Request Parameters
@@ -118,7 +118,7 @@ Request Parameters
 The following GET request, is an example request using cURL
 
 ```console
-curl --location --request GET 'http://localhost:8050/api/v1/sawmill?name=test1'
+curl --location --request GET 'http://localhost:8050/api/v1/sawmill/test1'
 ```
 
 The above command returns the exact match of entered sawmill name
@@ -187,4 +187,56 @@ Example of response
   "created_at": "2022-01-15T13:12:05.635+00:00",
   "updated_at": "2022-01-15T13:12:24.413+00:00"
 }
+```
+
+### Get Sawmill by Name
+
+```text
+GET /api/v1/sawmill?name=<query>
+```
+
+Request Parameters
+
+| Parameter | Description                    |
+|-----------|--------------------------------|
+| `query`   | Sawmill name to be filtered by |
+
+The following GET request, is an example request using cURL
+
+```console
+curl --location --request GET 'http://localhost:8050/api/v1/sawmill?name=a'
+```
+
+The above command returns the matches of sawmill name for the entered query 
+if the request parameter name is not entered the all the sawmills will be returned
+
+Example of response
+
+```json
+[
+  {
+    "id": 1,
+    "name": "a",
+    "city": "pune",
+    "country": "India",
+    "created_at": "2022-01-16T07:10:42.608+00:00",
+    "updated_at": "2022-01-16T07:10:42.608+00:00"
+  },
+  {
+    "id": 2,
+    "name": "a2",
+    "city": "pune",
+    "country": "India",
+    "created_at": "2022-01-16T07:10:46.245+00:00",
+    "updated_at": "2022-01-16T07:10:46.245+00:00"
+  },
+  {
+    "id": 3,
+    "name": "a3",
+    "city": "pune",
+    "country": "India",
+    "created_at": "2022-01-16T07:10:51.869+00:00",
+    "updated_at": "2022-01-16T07:10:51.869+00:00"
+  }
+]
 ```

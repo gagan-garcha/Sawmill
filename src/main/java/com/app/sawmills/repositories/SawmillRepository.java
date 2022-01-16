@@ -12,6 +12,6 @@ public interface SawmillRepository extends CrudRepository<Sawmill,Long> {
 
     Sawmill findByName (String name);
 
-    List<Sawmill> findByNameLike(String query);
+    List<Sawmill> findByNameContainingIgnoreCase(String query);
 
 }

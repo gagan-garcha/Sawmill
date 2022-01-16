@@ -39,7 +39,16 @@ public class EndpointTest {
     public void givenSawmillNameShouldReturnSawmill(){
         String sawmillName = "test";
 
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/v1/sawmill?name=" + sawmillName, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/v1/sawmill/" + sawmillName, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void givenFilterNameShouldReturnSawmills(){
+        String query = "t";
+
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/v1/sawmill?name=" + query, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

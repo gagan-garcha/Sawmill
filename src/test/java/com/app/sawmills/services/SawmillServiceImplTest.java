@@ -2,7 +2,6 @@ package com.app.sawmills.services;
 
 import com.app.sawmills.models.Sawmill;
 import com.app.sawmills.repositories.SawmillRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,6 +64,13 @@ public class SawmillServiceImplTest {
         when(sawmillRepository.save(any())).thenReturn(sawmill3);
         Sawmill updatedSawmill = sawmillService.updateSawmill(sawmill1.getId(),changes);
         assertThat(updatedSawmill).isEqualTo(sawmill3);
+    }
+
+    @Test
+    void givenFilerNameReturnListOfSawmills(){
+        when(sawmillRepository.findByNameContainingIgnoreCase(any())).thenReturn(List.of(sawmill1));
+        List<Sawmill> sawmills = sawmillService.getSawmills("t");
+        verify(sawmillRepository,times(1)).findByNameContainingIgnoreCase(any());
     }
 
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class SawmillServiceImpl implements SawmillService{
@@ -19,7 +18,10 @@ public class SawmillServiceImpl implements SawmillService{
 
     @Override
     public List<Sawmill> getSawmills(String query) {
-        return sawmillRepository.findByNameLike(query);
+        if(query == null || query.isEmpty())
+            return (List<Sawmill>) sawmillRepository.findAll();
+
+        return sawmillRepository.findByNameContainingIgnoreCase(query);
     }
 
     @Override

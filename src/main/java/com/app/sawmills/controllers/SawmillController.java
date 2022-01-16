@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,9 +22,9 @@ public class SawmillController {
     }
 
     @PostMapping
-    public ResponseEntity<Sawmill> saveSawmill(@Valid @NotNull @RequestBody Sawmill sawmill) {
-        Sawmill todo1 = sawmillService.insert(sawmill);
-        return new ResponseEntity<>(todo1,  HttpStatus.CREATED);
+    public ResponseEntity<Sawmill> saveSawmill(@Valid @NotNull @RequestBody Sawmill request) {
+        Sawmill sawmill = sawmillService.insert(request);
+        return new ResponseEntity<>(sawmill,  HttpStatus.CREATED);
     }
 
     @PatchMapping("/{sawmillId}")
@@ -35,10 +36,16 @@ public class SawmillController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity<Sawmill> getSawmill(@Valid @NotNull @PathVariable String name) {
+        Sawmill sawmill = sawmillService.getSawmillByName(name);
+        return new ResponseEntity<>(sawmill,  HttpStatus.OK);
+    }
+
     @GetMapping
-    public ResponseEntity<Sawmill> getSawmill(@Valid @NotNull @RequestParam String name) {
-        Sawmill todo1 = sawmillService.getSawmillByName(name);
-        return new ResponseEntity<>(todo1,  HttpStatus.OK);
+    public ResponseEntity<List<Sawmill>> getAllSawmill(@RequestParam(required = false) String name) {
+        List<Sawmill> sawmills = sawmillService.getSawmills(name);
+        return ResponseEntity.ok(sawmills);
     }
 
 
