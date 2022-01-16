@@ -75,8 +75,12 @@ test {
     }
 }
 
-springBoot {
-    mainClass = "com.app.sawmills.SawmillsApplication"
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.app.sawmills.SawmillsApplication'
+        )
+    }
 }
 
 check {
