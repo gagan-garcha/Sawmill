@@ -75,6 +75,10 @@ test {
     }
 }
 
+bootJar {
+    mainClass = 'com.app.sawmills.SawmillsApplication'
+}
+
 check {
     dependsOn integrationTest
 }
