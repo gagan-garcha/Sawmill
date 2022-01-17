@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -72,7 +73,7 @@ public class SawmillControllerTest {
 
     @Test
     public void GetMappingOfSawmillShouldReturnRespectiveSawmill() throws Exception {
-        when(sawmillService.getSawmillByName(sawmill.getName())).thenReturn(sawmill);
+        when(sawmillService.getSawmillByName(sawmill.getName())).thenReturn(Optional.ofNullable(sawmill));
         mockMvc.perform(get("/api/v1/sawmill/test")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(sawmill)))
@@ -82,7 +83,7 @@ public class SawmillControllerTest {
 
     @Test
     public void PatchMappingForSawmill() throws Exception {
-        when(sawmillService.updateSawmill(sawmill.getId(),changes)).thenReturn(sawmill3);
+        when(sawmillService.updateSawmill(sawmill.getId(),changes)).thenReturn(Optional.ofNullable(sawmill3));
         mockMvc.perform(patch("/api/v1/sawmill/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(changes)))

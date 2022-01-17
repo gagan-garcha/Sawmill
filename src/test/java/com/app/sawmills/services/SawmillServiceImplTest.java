@@ -53,8 +53,8 @@ public class SawmillServiceImplTest {
     void givenSawmillNameShouldReturnSawmill(){
         when(sawmillRepository.findByNameIgnoreCase(sawmill1.getName())).thenReturn(sawmill1);
         when(sawmillRepository.findByNameIgnoreCase(sawmill2.getName())).thenReturn(sawmill2);
-        assertThat(sawmillService.getSawmillByName(sawmill1.getName())).isEqualTo(sawmill1);
-        assertThat(sawmillService.getSawmillByName(sawmill2.getName())).isEqualTo(sawmill2);
+        assertThat(sawmillService.getSawmillByName(sawmill1.getName()).get()).isEqualTo(sawmill1);
+        assertThat(sawmillService.getSawmillByName(sawmill2.getName()).get()).isEqualTo(sawmill2);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class SawmillServiceImplTest {
 
         when(sawmillRepository.findById(sawmill1.getId())).thenReturn(Optional.ofNullable(sawmill1));
         when(sawmillRepository.save(any())).thenReturn(sawmill3);
-        Sawmill updatedSawmill = sawmillService.updateSawmill(sawmill1.getId(),changes);
-        assertThat(updatedSawmill).isEqualTo(sawmill3);
+        Optional<Sawmill> updatedSawmill = sawmillService.updateSawmill(sawmill1.getId(),changes);
+        assertThat(updatedSawmill.get()).isEqualTo(sawmill3);
     }
 
     @Test

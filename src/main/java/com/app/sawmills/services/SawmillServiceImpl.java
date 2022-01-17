@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class SawmillServiceImpl implements SawmillService{
@@ -25,8 +26,8 @@ public class SawmillServiceImpl implements SawmillService{
     }
 
     @Override
-    public Sawmill getSawmillByName(String name) {
-        return   sawmillRepository.findByNameIgnoreCase(name);
+    public Optional<Sawmill> getSawmillByName(String name) {
+        return   Optional.ofNullable(sawmillRepository.findByNameIgnoreCase(name));
     }
 
     @Override
@@ -35,31 +36,29 @@ public class SawmillServiceImpl implements SawmillService{
     }
 
     @Override
-    public Sawmill updateSawmill(Long id, Map<String,Object> changes) {
+    public Optional<Sawmill> updateSawmill(Long id, Map<String,Object> changes) {
 
-        Sawmill sawmill = sawmillRepository.findById(id).get();
+        Sawmill sawmill = sawmillRepository.findById(id).orElse(null);
 
-        if(sawmill != null) {
-            changes.forEach((change, value) -> {
-                switch (change) {
-                    case "name":
-                        sawmill.setName((String) value);
-                        break;
-                    case "city":
-                        sawmill.setCity((String) value);
-                        break;
-                    case "country":
-                        sawmill.setCountry((String) value);
-                        break;
-                    default:
-                        break;
-                }
-            });
+        if(sawmill == null) return Optional.empty();
 
-            return sawmillRepository.save(sawmill);
-        }
+        changes.forEach((change, value) -> {
+            switch (change) {
+                case "name":
+                    sawmill.setName((String) value);
+                    break;
+                case "city":
+                    sawmill.setCity((String) value);
+                    break;
+                case "country":
+                    sawmill.setCountry((String) value);
+                    break;
+                default:
+                    break;
+            }
+        });
 
-        return null;
+        return Optional.of(sawmillRepository.save(sawmill));
 
     }
 }

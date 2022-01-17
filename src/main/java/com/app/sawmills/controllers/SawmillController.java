@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/sawmill")
@@ -37,11 +38,7 @@ public class SawmillController {
      */
     @PatchMapping("/{sawmillId}")
     public ResponseEntity<?> updateSawmill(@PathVariable long sawmillId,@RequestBody Map<String,Object> changes){
-        Sawmill sawmill = sawmillService.updateSawmill(sawmillId,changes);
-        if(sawmill != null)
-        return new ResponseEntity<>(sawmill,  HttpStatus.OK);
-
-        return ResponseEntity.badRequest().build();
+        return sawmillService.updateSawmill(sawmillId,changes).map(ResponseEntity::ok).orElse(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -50,8 +47,7 @@ public class SawmillController {
      */
     @GetMapping("/{name}")
     public ResponseEntity<Sawmill> getSawmill(@Valid @NotNull @PathVariable String name) {
-        Sawmill sawmill = sawmillService.getSawmillByName(name);
-        return new ResponseEntity<>(sawmill,  HttpStatus.OK);
+        return sawmillService.getSawmillByName(name).map(ResponseEntity::ok).orElse(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     /**
